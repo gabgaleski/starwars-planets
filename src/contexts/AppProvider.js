@@ -4,6 +4,7 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }) {
   const [saveData, setSaveData] = useState([]);
+  const [table, setTable] = useState([]);
 
   const fetchApi = async () => {
     const response = await fetch('https://swapi.dev/api/planets');
@@ -12,11 +13,15 @@ function AppProvider({ children }) {
   };
 
   useEffect(() => {
+    setTable(saveData);
+  }, [saveData]);
+
+  useEffect(() => {
     fetchApi();
   }, []);
 
   return (
-    <AppContext.Provider value={ { saveData, setSaveData } }>
+    <AppContext.Provider value={ { saveData, setSaveData, table, setTable } }>
       {children}
     </AppContext.Provider>
   );

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import AppContext from '../contexts/AppContext';
 
 function Table() {
-  const { saveData } = useContext(AppContext);
+  const { table } = useContext(AppContext);
   return (
     <table border="1">
       <thead>
@@ -23,7 +23,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {saveData.map((planet) => (
+        {table.map((planet) => (
           <tr key={ planet.name }>
             <td>{planet.name}</td>
             <td>{planet.rotation_period}</td>
