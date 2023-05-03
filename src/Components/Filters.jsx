@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react';
 import AppContext from '../contexts/AppContext';
 
 function Filters() {
-  const { saveData, setTable, table } = useContext(AppContext);
+  const { saveData,
+    setTable, table, columnFilter, setColumnFilter } = useContext(AppContext);
   const [filtersInfo, setFiltersInfo] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -40,6 +41,10 @@ function Filters() {
         Number(planet[column]) === numberValue));
       setTable(filterColumn);
     }
+
+    const newColumn = columnFilter.filter((element) => element !== column);
+
+    setColumnFilter(newColumn);
   };
 
   return (
@@ -57,11 +62,9 @@ function Filters() {
         name="column"
         data-testid="column-filter"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {columnFilter.map((element) => (
+          <option key={ element } value={ element }>{element}</option>))}
+
       </select>
       <select
         value={ filtersInfo.comparison }
