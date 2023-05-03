@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../contexts/AppContext';
 
 function Filters() {
@@ -45,6 +45,10 @@ function Filters() {
     const newColumn = columnFilter.filter((element) => element !== column);
 
     setColumnFilter(newColumn);
+    setFiltersInfo((prevState) => ({
+      ...prevState,
+      column: newColumn[0],
+    }));
   };
 
   return (
