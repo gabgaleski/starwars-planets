@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import AppContext from '../contexts/AppContext';
 
 function Filters() {
-  const { saveData, setTable } = useContext(AppContext);
+  const { saveData, setTable, table } = useContext(AppContext);
   const [filtersInfo, setFiltersInfo] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -28,15 +28,15 @@ function Filters() {
     const numberValue = Number(value);
 
     if (comparison === 'maior que') {
-      const filterColumn = saveData.filter((planet) => (
+      const filterColumn = table.filter((planet) => (
         Number(planet[column]) > numberValue));
       setTable(filterColumn);
     } else if (comparison === 'menor que') {
-      const filterColumn = saveData.filter((planet) => (
+      const filterColumn = table.filter((planet) => (
         Number(planet[column]) < numberValue));
       setTable(filterColumn);
     } else if (comparison === 'igual a') {
-      const filterColumn = saveData.filter((planet) => (
+      const filterColumn = table.filter((planet) => (
         Number(planet[column]) === numberValue));
       setTable(filterColumn);
     }
