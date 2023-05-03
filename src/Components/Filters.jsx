@@ -35,7 +35,7 @@ function Filters() {
       const filterColumn = table.filter((planet) => (
         Number(planet[column]) < numberValue));
       setTable(filterColumn);
-    } else if (comparison === 'igual a') {
+    } else {
       const filterColumn = table.filter((planet) => (
         Number(planet[column]) === numberValue));
       setTable(filterColumn);
