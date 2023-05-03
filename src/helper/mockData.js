@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 const mockData = {
   count: 60,
   next: 'https://swapi.dev/api/planets/?page=2',
@@ -26,11 +27,11 @@ const mockData = {
         'https://swapi.dev/api/people/62/',
       ],
       films: [
-        'https://swapi.dev/api/films/1/',
-        'https://swapi.dev/api/films/3/',
-        'https://swapi.dev/api/films/4/',
-        'https://swapi.dev/api/films/5/',
-        'https://swapi.dev/api/films/6/',
+        'https://swapi.dev/api/films/11/',
+        'https://swapi.dev/api/films/18/',
+        'https://swapi.dev/api/films/14/',
+        'https://swapi.dev/api/films/15/',
+        'https://swapi.dev/api/films/16/',
       ],
       created: '2014-12-09T13:50:49.641000Z',
       edited: '2014-12-20T20:58:18.411000Z',
@@ -53,7 +54,7 @@ const mockData = {
       ],
       films: [
         'https://swapi.dev/api/films/1/',
-        'https://swapi.dev/api/films/6/',
+        'https://swapi.dev/api/films/7/',
       ],
       created: '2014-12-10T11:35:48.479000Z',
       edited: '2014-12-20T20:58:18.420000Z',
@@ -89,7 +90,7 @@ const mockData = {
       population: 'unknown',
       residents: [],
       films: [
-        'https://swapi.dev/api/films/2/',
+        'https://swapi.dev/api/films/12/',
       ],
       created: '2014-12-10T11:39:13.934000Z',
       edited: '2014-12-20T20:58:18.423000Z',
@@ -108,8 +109,8 @@ const mockData = {
       residents: [],
       films: [
         'https://swapi.dev/api/films/2/',
-        'https://swapi.dev/api/films/3/',
-        'https://swapi.dev/api/films/6/',
+        'https://swapi.dev/api/films/13/',
+        'https://swapi.dev/api/films/16/',
       ],
       created: '2014-12-10T11:42:22.590000Z',
       edited: '2014-12-20T20:58:18.425000Z',
@@ -149,7 +150,7 @@ const mockData = {
         'https://swapi.dev/api/people/30/',
       ],
       films: [
-        'https://swapi.dev/api/films/3/',
+        'https://swapi.dev/api/films/13/',
       ],
       created: '2014-12-10T11:50:29.349000Z',
       edited: '2014-12-20T20:58:18.429000Z',
@@ -181,7 +182,7 @@ const mockData = {
       films: [
         'https://swapi.dev/api/films/3/',
         'https://swapi.dev/api/films/4/',
-        'https://swapi.dev/api/films/5/',
+        'https://swapi.dev/api/films/15/',
         'https://swapi.dev/api/films/6/',
       ],
       created: '2014-12-10T11:52:31.066000Z',
