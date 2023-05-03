@@ -10,6 +10,8 @@ function Filters() {
     value: 0,
   });
 
+  const [usedFilter, setUsedFilter] = useState([]);
+
   const filterName = ({ target }) => {
     const newTable = saveData.filter((planet) => planet.name.includes(target.value));
     setTable(newTable);
@@ -22,6 +24,14 @@ function Filters() {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const deletColumn = ({ target }) => {
+    const { name } = target;
+    const newColumn = [...columnFilter, name];
+    const newFilterUsed = usedFilter.filter((element) => element !== name);
+    setColumnFilter(newColumn);
+    setUsedFilter(newFilterUsed);
   };
 
   const filterOnClick = () => {
@@ -49,6 +59,8 @@ function Filters() {
       ...prevState,
       column: newColumn[0],
     }));
+
+    setUsedFilter((prevState) => [...prevState, column]);
   };
 
   return (
@@ -94,6 +106,14 @@ function Filters() {
         Filtrar
 
       </button>
+      {usedFilter.map((element, index) => (
+        <div key={ index }>
+          <span data-testid="filter">
+            {element}
+            <button name={ element } onClick={ deletColumn }>Excluir</button>
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
