@@ -147,5 +147,17 @@ describe('Testando o App', () => {
       expect(await screen.findByRole('cell', {
         name: /tatooine/i
       })).toBeInTheDocument()
+
+      const getDeletBtn = screen.getByRole('button', {
+        name: /excluir/i
+      })
+
+      const surface = screen.getByText(/surface_water/i)
+
+      expect(surface).toBeInTheDocument()
+
+      userEvent.click(getDeletBtn)
+
+      expect(surface).not.toBeInTheDocument()
   })
 });
