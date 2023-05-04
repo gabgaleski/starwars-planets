@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import App from '../App';
 import mockData from '../helper/mockData';
 import AppProvider from '../contexts/AppProvider';
@@ -23,7 +23,7 @@ describe('Testando o App', () => {
       expect(screen.getByRole('textbox')).toBeInTheDocument()
       expect(screen.getByRole('spinbutton')).toBeInTheDocument()
       expect(screen.getByRole('button', {
-        name: /filtrar/i
+        name: 'Filtrar'
       })).toBeInTheDocument()
       expect(global.fetch).toBeCalledTimes(1)
       expect(screen.getByRole('option', { name: 'population' }).selected).toBe(true)
@@ -161,7 +161,7 @@ describe('Testando o App', () => {
       expect(surface).not.toBeInTheDocument()
   })
 
-  it('Testando botao de limpar filtros e excluir filtros', () => {
+  it('Testando botao de limpar filtros e excluir filtros', async () => {
     render(
       <AppProvider>
           <App />
@@ -172,6 +172,9 @@ describe('Testando o App', () => {
     const getButton = screen.getByRole('button', {
       name: /filtrar/i
     })
+    const column = screen.getByTestId('column-filter')
+    const comparison = screen.getByTestId('comparison-filter')
+
 
     userEvent.type(getValue, '1')
     userEvent.click(getButton)
@@ -195,5 +198,50 @@ describe('Testando o App', () => {
 
     expect(deletBtn).not.toBeInTheDocument()
 
+    userEvent.selectOptions(column, 'surface_water')
+    userEvent.selectOptions(comparison, 'menor que')
+    userEvent.type(getValue, '40')
+    userEvent.click(getButton)
+
+    userEvent.selectOptions(column, 'rotation_period')
+    userEvent.selectOptions(comparison, 'maior que')
+    userEvent.type(getValue, '23')
+    userEvent.click(getButton)
+
+    expect(await screen.findByRole('cell', {
+      name: /naboo/i
+    })).toBeInTheDocument()
+
+    const view = screen.getByText(/surface_water/i);
+
+    within(view).getByRole('button', {
+      name: /excluir/i
+    });
+
+    userEvent.click(clearFilters)
+
+    userEvent.selectOptions(column, 'rotation_period')
+    userEvent.selectOptions(comparison, 'igual a')
+    userEvent.type(getValue, '23')
+    userEvent.click(getButton)
+
+    const getDelet = screen.getByRole('button', {  name: /excluir/i})
+
+    userEvent.click(getDelet)
+
+    userEvent.selectOptions(column, 'rotation_period')
+    userEvent.selectOptions(comparison, 'maior que')
+    userEvent.type(getValue, '23')
+    userEvent.click(getButton)
+
+    userEvent.click(getDelet)
+    userEvent.click(clearFilters)
+
+    userEvent.selectOptions(column, 'rotation_period')
+    userEvent.selectOptions(comparison, 'menor que')
+    userEvent.type(getValue, '23')
+    userEvent.click(getButton)
+
+    userEvent.click(getDelet)
   })
 });
