@@ -30,7 +30,12 @@ function AppProvider({ children }) {
   return (
     <AppContext.Provider
       value={
-        { saveData, setSaveData, table, setTable, columnFilter, setColumnFilter }
+        { saveData,
+          setSaveData,
+          table,
+          setTable,
+          columnFilter,
+          setColumnFilter }
       }
     >
       {children}

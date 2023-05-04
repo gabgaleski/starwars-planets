@@ -160,4 +160,40 @@ describe('Testando o App', () => {
 
       expect(surface).not.toBeInTheDocument()
   })
+
+  it('Testando botao de limpar filtros e excluir filtros', () => {
+    render(
+      <AppProvider>
+          <App />
+      </AppProvider>
+    )
+
+    const getValue = screen.getByRole("spinbutton");
+    const getButton = screen.getByRole('button', {
+      name: /filtrar/i
+    })
+
+    userEvent.type(getValue, '1')
+    userEvent.click(getButton)
+
+    const deletBtn = screen.getByRole('button', {
+      name: /excluir/i
+    })
+
+    userEvent.click(deletBtn)
+
+    expect(deletBtn).not.toBeInTheDocument()
+
+    userEvent.type(getValue, '100')
+    userEvent.click(getButton)
+
+    const clearFilters = screen.getByRole('button', {
+      name: /remover filtros/i
+    })
+
+    userEvent.click(clearFilters)
+
+    expect(deletBtn).not.toBeInTheDocument()
+
+  })
 });

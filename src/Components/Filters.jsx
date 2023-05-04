@@ -1,9 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import AppContext from '../contexts/AppContext';
 
 function Filters() {
-  const { saveData,
-    setTable, table, columnFilter, setColumnFilter } = useContext(AppContext);
+  const {
+    saveData,
+    setTable,
+    table,
+    columnFilter,
+    setColumnFilter,
+  } = useContext(AppContext);
+
   const [filtersInfo, setFiltersInfo] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -11,6 +17,7 @@ function Filters() {
   });
 
   const [usedFilter, setUsedFilter] = useState([]);
+  const [deletedFilter, setDeletedFilter] = useState(false);
 
   const filterName = ({ target }) => {
     const newTable = saveData.filter((planet) => planet.name.includes(target.value));
@@ -26,16 +33,7 @@ function Filters() {
     }));
   };
 
-  const deletColumn = ({ target }) => {
-    const { name } = target;
-    const newColumn = [...columnFilter, name];
-    const newFilterUsed = usedFilter.filter((element) => element !== name);
-    setColumnFilter(newColumn);
-    setUsedFilter(newFilterUsed);
-  };
-
-  const filterOnClick = () => {
-    const { column, comparison, value } = filtersInfo;
+  const updateTable = useCallback((column, comparison, value) => {
     const numberValue = Number(value);
 
     if (comparison === 'maior que') {
@@ -51,6 +49,12 @@ function Filters() {
         Number(planet[column]) === numberValue));
       setTable(filterColumn);
     }
+  }, [setTable, table]);
+
+  const filterOnClick = () => {
+    const { column, comparison, value } = filtersInfo;
+
+    updateTable(column, comparison, value);
 
     const newColumn = columnFilter.filter((element) => element !== column);
 
@@ -60,7 +64,52 @@ function Filters() {
       column: newColumn[0],
     }));
 
-    setUsedFilter((prevState) => [...prevState, column]);
+    setUsedFilter((prevState) => [...prevState, { column, comparison, value }]);
+  };
+
+  useEffect(() => {
+    if (deletedFilter) {
+      let updateFilterTable = saveData;
+      usedFilter.forEach(({ column, comparison, value }) => {
+        const numberValue = Number(value);
+        if (comparison === 'maior que') {
+          const filterColumn = updateFilterTable.filter((planet) => (
+            Number(planet[column]) > numberValue));
+          updateFilterTable = filterColumn;
+        } else if (comparison === 'menor que') {
+          const filterColumn = updateFilterTable.filter((planet) => (
+            Number(planet[column]) < numberValue));
+          updateFilterTable = filterColumn;
+        } else {
+          const filterColumn = updateFilterTable.filter((planet) => (
+            Number(planet[column]) === numberValue));
+          updateFilterTable = filterColumn;
+        }
+      });
+      setTable(updateFilterTable);
+    }
+    setDeletedFilter(false);
+  }, [saveData, deletedFilter, setTable, usedFilter]);
+
+  const deletColumn = (name) => {
+    const newColumn = [...columnFilter, name];
+    const newFilterUsed = usedFilter.filter((element) => element.column !== name);
+
+    setUsedFilter(newFilterUsed);
+    setColumnFilter(newColumn);
+    setDeletedFilter(true);
+  };
+
+  const removeAllFilters = () => {
+    setTable(saveData);
+    setColumnFilter([
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ]);
+    setUsedFilter([]);
   };
 
   return (
@@ -106,11 +155,23 @@ function Filters() {
         Filtrar
 
       </button>
+      <button
+        onClick={ removeAllFilters }
+        data-testid="button-remove-filters"
+      >
+        Remover filtros
+
+      </button>
       {usedFilter.map((element, index) => (
         <div key={ index }>
           <span data-testid="filter">
-            {element}
-            <button name={ element } onClick={ deletColumn }>Excluir</button>
+            {element.column}
+            <button
+              onClick={ () => deletColumn(element.column) }
+            >
+              Excluir
+
+            </button>
           </span>
         </div>
       ))}
