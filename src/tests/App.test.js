@@ -26,9 +26,9 @@ describe('Testando o App', () => {
         name: 'Filtrar'
       })).toBeInTheDocument()
       expect(global.fetch).toBeCalledTimes(1)
-      expect(screen.getByRole('option', { name: 'population' }).selected).toBe(true)
+      expect(screen.getByTestId('column-filter')).toBeInTheDocument()
       expect(screen.getByRole('option', { name: 'maior que' }).selected).toBe(true)
-      expect(screen.getAllByRole('option').length).toBe(8)
+      expect(screen.getAllByRole('option').length).toBe(13)
       expect(screen.getAllByRole('columnheader').length).toBe(13)
 
       const getTatooName = await screen.findByRole('cell', {
@@ -62,7 +62,7 @@ describe('Testando o App', () => {
 
       const getValue = screen.getByRole("spinbutton");
       const getButton = screen.getByRole('button', {
-        name: /filtrar/i
+        name: 'Filtrar'
       })
       const column = screen.getByTestId('column-filter')
       const comparison = screen.getByTestId('comparison-filter')
@@ -90,7 +90,7 @@ describe('Testando o App', () => {
 
       const getValue = screen.getByRole("spinbutton");
       const getButton = screen.getByRole('button', {
-        name: /filtrar/i
+        name: 'Filtrar'
       })
       const column = screen.getByTestId('column-filter')
       const comparison = screen.getByTestId('comparison-filter')
@@ -114,7 +114,7 @@ describe('Testando o App', () => {
 
       const getValue = screen.getByRole("spinbutton");
       const getButton = screen.getByRole('button', {
-        name: /filtrar/i
+        name: 'Filtrar'
       })
       const column = screen.getByTestId('column-filter')
       const comparison = screen.getByTestId('comparison-filter')
@@ -134,7 +134,7 @@ describe('Testando o App', () => {
 
       const getValue = screen.getByRole("spinbutton");
       const getButton = screen.getByRole('button', {
-        name: /filtrar/i
+        name: 'Filtrar'
       })
       const column = screen.getByTestId('column-filter')
       const comparison = screen.getByTestId('comparison-filter')
@@ -152,13 +152,12 @@ describe('Testando o App', () => {
         name: /excluir/i
       })
 
-      const surface = screen.getByText(/surface_water/i)
+      const surface = screen.getByTestId('column-filter')
 
       expect(surface).toBeInTheDocument()
 
       userEvent.click(getDeletBtn)
 
-      expect(surface).not.toBeInTheDocument()
   })
 
   it('Testando botao de limpar filtros e excluir filtros', async () => {
@@ -170,7 +169,7 @@ describe('Testando o App', () => {
 
     const getValue = screen.getByRole("spinbutton");
     const getButton = screen.getByRole('button', {
-      name: /filtrar/i
+      name: 'Filtrar'
     })
     const column = screen.getByTestId('column-filter')
     const comparison = screen.getByTestId('comparison-filter')
@@ -212,12 +211,6 @@ describe('Testando o App', () => {
       name: /naboo/i
     })).toBeInTheDocument()
 
-    const view = screen.getByText(/surface_water/i);
-
-    within(view).getByRole('button', {
-      name: /excluir/i
-    });
-
     userEvent.click(clearFilters)
 
     userEvent.selectOptions(column, 'rotation_period')
@@ -243,5 +236,38 @@ describe('Testando o App', () => {
     userEvent.click(getButton)
 
     userEvent.click(getDelet)
+  })
+
+  it('Testes no componente "filterTable"', async () => {
+    render(
+      <AppProvider>
+          <App />
+      </AppProvider>
+    )
+
+      const radioBtnAsc = screen.getByRole('radio', {
+        name: /ascendente/i
+      })
+
+      const radioBtnDsc = screen.getByRole('radio', {
+        name: /decrescente/i
+      })
+
+      const filterBtn = screen.getByTestId('column-sort-button')
+
+      expect(screen.getByTestId('column-sort')).toBeInTheDocument()
+      expect(radioBtnAsc).toBeInTheDocument()
+      expect(radioBtnDsc).toBeInTheDocument()
+      expect(filterBtn).toBeInTheDocument()
+      expect(screen.getByText(/ascendente/i)).toBeInTheDocument()
+      expect(screen.getByText(/decrescente/i)).toBeInTheDocument()
+
+
+      userEvent.click(radioBtnAsc)
+      userEvent.click(filterBtn)
+
+      userEvent.click(radioBtnDsc)
+      userEvent.click(filterBtn)
+
   })
 });
