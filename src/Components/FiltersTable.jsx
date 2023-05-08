@@ -4,7 +4,7 @@ import AppContext from '../contexts/AppContext';
 function FiltersTable() {
   const { table, setTable } = useContext(AppContext);
   const [sortTable, setSortTable] = useState(
-    { order: { column: 'population', sort: 'ASC' } },
+    { order: { column: 'population', sort: '' } },
   );
 
   const handleChange = ({ target }) => {
@@ -26,7 +26,7 @@ function FiltersTable() {
         Number(a[column] - Number(b[column]))));
 
       setTable([...sortTableNumbers, ...getUnknown]);
-    } else if (sort === 'DESC') {
+    } else {
       const sortTableNumbers = getAllTable.sort((a, b) => (
         Number(b[column] - Number(a[column]))));
 

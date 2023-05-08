@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import mockData from '../helper/mockData';
 import AppProvider from '../contexts/AppProvider';
@@ -129,8 +129,8 @@ describe('Testando o App', () => {
   const radioDec = screen.getByTestId('column-sort-input-desc')
   const filterTableBtn = screen.getByTestId('column-sort-button')
 
-  userEvent.selectOptions(filterTable, 'population')
-  userEvent.click(radioAsc)
+    userEvent.selectOptions(filterTable, 'population')
+    userEvent.click(radioAsc)
 
     act(() => {
       userEvent.click(filterTableBtn)
@@ -143,6 +143,87 @@ describe('Testando o App', () => {
 
   userEvent.click(radioDec)
   userEvent.click(filterTableBtn)
+
+ })
+
+ it('Testando os deletes dos filtros', async () => {
+  render(
+    <AppProvider>
+        <App />
+    </AppProvider>
+  )
+
+  const selectColumn = screen.getByTestId('column-filter')
+  const comparisonFilter = screen.getByTestId('comparison-filter')
+  const valueFilter = screen.getByTestId('value-filter')
+  const filterButton = screen.getByTestId('button-filter')
+
+
+  await waitFor(() => {
+    expect(screen.getAllByTestId('planet-name').length).toBe(10)
+})
+
+  userEvent.selectOptions(selectColumn, 'rotation_period')
+  userEvent.selectOptions(comparisonFilter, 'maior que')
+  userEvent.clear(valueFilter)
+  userEvent.type(valueFilter, '23')
+  
+  act(() => {
+    userEvent.click(filterButton)
+  })
+
+    expect(screen.getAllByTestId('planet-name').length).toBe(5)
+
+
+  userEvent.selectOptions(selectColumn, 'orbital_period')
+  userEvent.selectOptions(comparisonFilter, 'menor que')
+  userEvent.clear(valueFilter)
+  userEvent.type(valueFilter, '400')
+
+  act(() => {
+    userEvent.click(filterButton)
+  })
+
+  expect(screen.getAllByTestId('planet-name').length).toBe(3)
+
+  userEvent.selectOptions(selectColumn, 'diameter')
+  userEvent.selectOptions(comparisonFilter, 'igual a')
+  userEvent.clear(valueFilter)
+  userEvent.type(valueFilter, '12500')
+
+  act(() => {
+    userEvent.click(filterButton)
+  })
+
+  expect(screen.getAllByTestId('planet-name').length).toBe(1)
+
+
+  const deletButton = screen.getAllByRole('button', {
+    name: /excluir/i
+  })
+
+  expect(deletButton.length).toBe(3)
+
+  act(() => {
+    userEvent.click(deletButton[2])
+  })
+
+  expect(screen.getAllByTestId('planet-name').length).toBe(3)
+
+  act(() => {
+    userEvent.click(deletButton[1])
+  })
+
+  expect(screen.getAllByTestId('planet-name').length).toBe(5)
+
+
+  act(() => {
+    userEvent.click(deletButton[0])
+  })
+
+  expect(screen.getAllByTestId('planet-name').length).toBe(10)
+
+
 
  })
 
