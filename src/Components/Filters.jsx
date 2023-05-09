@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import Button from '@mui/material/Button';
 import AppContext from '../contexts/AppContext';
 
 function Filters() {
@@ -148,20 +149,22 @@ function Filters() {
         type="number"
         data-testid="value-filter"
       />
-      <button
+      <Button
+        variant="contained"
         onClick={ filterOnClick }
         data-testid="button-filter"
       >
         Filtrar
 
-      </button>
-      <button
+      </Button>
+      <Button
+        variant="contained"
         onClick={ removeAllFilters }
         data-testid="button-remove-filters"
       >
         Remover filtros
 
-      </button>
+      </Button>
       {usedFilter.map((element, index) => (
         <div key={ index }>
           <span data-testid="filter">
