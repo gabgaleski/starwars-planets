@@ -1,10 +1,38 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# :earth_americas: Starwars Planets! :earth_asia:
+
+<br>
+
+# :camera_flash: Imagens do Projeto
+  
+  <img width="900" alt="Imagem pagina de login" src="./imagesReadme/pageLogin.png">
+
+
+<br>
+
+# :clipboard: About
+Projeto Desenvolvido durante o curso da Trybe com foco no desenvolvimento de filtros, utilizando Context API para conectar os componentes. O projeto se trata de 
+uma tabela de planetas do mundo de Star Wars com diversas informaçoes sobre cada um, podendo utilizar de diversos filtros para apresentar apenas os que corresponderem.
+
+
+<br>
+
+# :hammer_and_wrench: Skills & Tools
+
+- HTML5
+- CSS3
+- JavaScript ES6+
+- React.js
+- React Testing Library / Jest
+- Context API
+- API
+- Material UI
+
+<br>
+
+# :scroll: Nota
+
+ <img width="700" alt="Imagem pagina wallet" src="./imagesReadme/nota.png">
+ 
+# :construction: To Implement :construction:
+
+- CSS Responsivo & Mobile
