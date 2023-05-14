@@ -1,5 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { TextField, Button, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import AppContext from '../contexts/AppContext';
 
 function Filters() {
@@ -114,70 +117,85 @@ function Filters() {
   };
 
   return (
-    <div>
+    <div className="filters-conainer">
       <input
+        className="name-input"
         placeholder="Name..."
         onChange={ filterName }
         name="inputChange"
         type="text"
         data-testid="name-filter"
       />
-      <select
-        value={ filtersInfo.column }
-        onChange={ handleChange }
-        name="column"
-        data-testid="column-filter"
-      >
-        {columnFilter.map((element) => (
-          <option key={ element } value={ element }>{element}</option>))}
+      <div className="filters-inputs">
+        <Select
+          sx={ { m: 1, width: 160 } }
+          size="small"
+          className="inputs-colors "
+          value={ filtersInfo.column }
+          onChange={ handleChange }
+          name="column"
+          data-testid="column-filter"
+        >
+          {columnFilter.map((element) => (
+            <MenuItem key={ element } value={ element }>{element}</MenuItem>))}
 
-      </select>
-      <select
-        value={ filtersInfo.comparison }
-        name="comparison"
-        onChange={ handleChange }
-        data-testid="comparison-filter"
-      >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input
-        onChange={ handleChange }
-        name="value"
-        value={ filtersInfo.value }
-        type="number"
-        data-testid="value-filter"
-      />
-      <Button
-        variant="contained"
-        onClick={ filterOnClick }
-        data-testid="button-filter"
-      >
-        Filtrar
+        </Select>
+        <Select
+          sx={ { m: 1, width: 130 } }
+          size="small"
+          className="inputs-colors "
+          value={ filtersInfo.comparison }
+          name="comparison"
+          onChange={ handleChange }
+          data-testid="comparison-filter"
+        >
+          <MenuItem value="maior que">maior que</MenuItem>
+          <MenuItem value="menor que">menor que</MenuItem>
+          <MenuItem value="igual a">igual a</MenuItem>
+        </Select>
+        <TextField
+          className="inputs-colors"
+          size="small"
+          onChange={ handleChange }
+          name="value"
+          value={ filtersInfo.value }
+          type="number"
+          data-testid="value-filter"
+        />
+        <Button
+          variant="contained"
+          onClick={ filterOnClick }
+          data-testid="button-filter"
+        >
+          Filtrar
 
-      </Button>
-      <Button
-        variant="contained"
-        onClick={ removeAllFilters }
-        data-testid="button-remove-filters"
-      >
-        Remover filtros
+        </Button>
+        <Button
+          variant="contained"
+          onClick={ removeAllFilters }
+          data-testid="button-remove-filters"
+        >
+          Remover filtros
 
-      </Button>
-      {usedFilter.map((element, index) => (
-        <div key={ index }>
-          <span data-testid="filter">
-            {element.column}
-            <button
-              onClick={ () => deletColumn(element.column) }
-            >
-              Excluir
-
-            </button>
-          </span>
-        </div>
-      ))}
+        </Button>
+      </div>
+      <div className="span-container">
+        {usedFilter.map((element, index) => (
+          <div className="span-div" key={ index }>
+            <span data-testid="filter" className="span-filter">
+              {element.column}
+              <IconButton
+                color="error"
+                aria-label="delete"
+                size="small"
+                onClick={ () => deletColumn(element.column) }
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

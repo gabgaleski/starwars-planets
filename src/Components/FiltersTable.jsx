@@ -1,4 +1,7 @@
 import { useContext, useState } from 'react';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Button } from '@mui/material';
 import AppContext from '../contexts/AppContext';
 
 function FiltersTable() {
@@ -35,46 +38,52 @@ function FiltersTable() {
   };
 
   return (
-    <div>
-      <select
+    <div className="list-filters-order">
+      <Select
+        sx={ { m: 1, width: 160 } }
+        size="small"
+        className="inputs-colors "
         name="column"
         onChange={ handleChange }
         value={ sortTable.order.column }
         data-testid="column-sort"
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-      </select>
-      <label>
-        Ascendente
-        <input
-          onChange={ handleChange }
-          name="sort"
-          value="ASC"
-          data-testid="column-sort-input-asc"
-          type="radio"
-        />
-      </label>
-      <label>
-        Decrescente
-        <input
-          onChange={ handleChange }
-          name="sort"
-          value="DESC"
-          data-testid="column-sort-input-desc"
-          type="radio"
-        />
-      </label>
-      <button
+        <MenuItem value="population">population</MenuItem>
+        <MenuItem value="orbital_period">orbital_period</MenuItem>
+        <MenuItem value="diameter">diameter</MenuItem>
+        <MenuItem value="rotation_period">rotation_period</MenuItem>
+        <MenuItem value="surface_water">surface_water</MenuItem>
+      </Select>
+      <div className="radio-container">
+        <label>
+          Ascendente
+          <input
+            onChange={ handleChange }
+            name="sort"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            type="radio"
+          />
+        </label>
+        <label>
+          Decrescente
+          <input
+            onChange={ handleChange }
+            name="sort"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            type="radio"
+          />
+        </label>
+      </div>
+      <Button
+        variant="contained"
         onClick={ orderTable }
         data-testid="column-sort-button"
       >
         Filtrar Tabela
 
-      </button>
+      </Button>
 
     </div>
   );
