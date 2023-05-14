@@ -3,8 +3,9 @@
 <br>
 
 # :camera_flash: Imagens do Projeto
+
   
-  <img width="900" alt="Imagem pagina de login" src="./imagesReadme/pageLogin.png">
+  <img width="800" alt="Imagem pagina wallet" src="./images/page2.png">
 
 
 <br>
@@ -31,7 +32,7 @@ uma tabela de planetas do mundo de Star Wars com diversas informaçoes sobre cad
 
 # :scroll: Nota
 
- <img width="700" alt="Imagem pagina wallet" src="./imagesReadme/nota.png">
+ <img width="700" alt="Imagem da Nota" src="./images/nota.png">
  
 # :construction: To Implement :construction:
 
