@@ -60,6 +60,7 @@ describe('Testando o App', () => {
       name: /tatooine/i
     })).toBeInTheDocument()
 
+
     userEvent.clear(filterName)
     userEvent.selectOptions(selectColumn, 'rotation_period')
     userEvent.selectOptions(comparisonFilter, 'igual a')
